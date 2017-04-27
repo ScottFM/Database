@@ -53,17 +53,27 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                         {
                             String user = eUser.getText().toString();
 
-                            access.addUser(user, pass);
-                            //Database function to check that username is not in database
+                            long conflict = access.addUser(user, pass);
 
-                            //if user not in database
-                            //Database function to add user with pass to database.
-
-                            Intent I = new Intent("com.example.Scott.Database.MainActivity");
-                            startActivity(I);
-                            break;
-
+                            if (conflict == -1)
+                            //Username already exists
+                            {
+                                Toast.makeText(this, "Username not available.", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            //Worked fine and user added
+                            {
+                                Intent I = new Intent("com.example.Scott.Database.MainActivity");
+                                startActivity(I);
+                                break;
+                            }
                         }
+                        else
+                        //Passwords don't match
+                        {
+                            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                        }
+
                     } else
                     //Password not entered
                     {
